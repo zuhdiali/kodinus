@@ -1,0 +1,7 @@
+{
+  "name": "kodinus",
+  "main": "app/index.html",
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  }
+}
