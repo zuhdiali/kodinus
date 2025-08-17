@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MainController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/example', function () {
     return response()->json(['message' => 'This is an example API route']);
 });
+
+Route::post('/membaca', [MainController::class, 'storeMembaca']);
+Route::post('/menyimak', [MainController::class, 'storeMenyimak']);
+Route::post('/menulis', [MainController::class, 'storeMenulis']);
+Route::post('/berbicara', [MainController::class, 'storeBerbicara']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

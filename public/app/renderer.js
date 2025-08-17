@@ -62,14 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
       asesmen.id = id;
       db.updateProduct(asesmen, function (err) {
         if (err) return console.error("Gagal update produk:", err.message);
-        // resetForm();
+        resetForm();
         // renderProducts();
       });
     } else {
       // Jika tidak ada ID, ini operasi tambah
       db.addProduct(asesmen, function (err) {
         if (err) return console.error("Gagal menambah produk:", err.message);
-        // resetForm();
+        resetForm();
         // renderProducts();
       });
     }
