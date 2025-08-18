@@ -75,7 +75,7 @@ class MainController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required|string|max:255',
-            'file_audio' => 'required|file|mimes:mp3,wav|max:10240',
+            'file_audio' => 'required|file|mimes:mp3,wav,webm,ogg|max:10240',
         ]);
         $file = $request->file('file_audio');
         $filename = time() . '_' . $file->getClientOriginalName();
@@ -90,15 +90,10 @@ class MainController extends Controller
         // This will store the file in 'storage/app/public/audio'
         // and return the relative path to the file
         $request->file('file_audio')->storeAs('audio', $filename, 'public');
-        // Save the file path in the database
-        $request->merge(['file_audio' => 'storage/audio/' . $filename]);
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'file_audio' => 'required|string',
-        ]);
+        // Save the file path in the database as 'storage/audio/filename'
         $berbicara = new Berbicara();
         $berbicara->nama = $request->nama;
-        $berbicara->file_audio = $request->file_audio;
+        $berbicara->file_audio = 'storage/audio/' . $filename;
         $berbicara->save();
         return response()->json($berbicara, 201);
     }

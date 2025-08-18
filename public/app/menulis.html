@@ -81,7 +81,7 @@
           <div class="row gy-4">
             <div class="col-12">
               <form
-                action="#"
+                action="http://localhost:8000/api/menulis"
                 method="post"
                 class="form-asesmen"
                 data-aos="fade-up"
@@ -100,12 +100,12 @@
                     />
                   </div>
                   <div class="col-12">
-                    <label for="soal-1" class="pb-2"
+                    <label for="soal_1" class="pb-2"
                       >Tuliskan kembali cerita yang telah Anda simak</label
                     >
                     <textarea
-                      name="soal-1"
-                      id="soal-1"
+                      name="soal_1"
+                      id="soal_1"
                       class="form-control"
                       required=""
                       rows="5"
@@ -119,7 +119,7 @@
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
                   <div class="sent-message">
-                    Your message has been sent. Thank you!
+                    Jawaban berhasil dikirim!
                   </div>
 
                   <button type="submit">Kirim Jawaban</button>
@@ -182,6 +182,50 @@
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
-    <script src="renderer.js"></script>
+    <!-- <script src="renderer.js"></script> -->
+
+        <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('.form-asesmen');
+
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Mencegah form refresh halaman
+
+          const formData = new FormData(this);
+          const action = this.getAttribute('action');
+          
+          const loading = this.querySelector('.loading');
+          const errorMessage = this.querySelector('.error-message');
+          const sentMessage = this.querySelector('.sent-message');
+
+          loading.style.display = 'block';
+
+          fetch(action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json',
+            },
+          })
+          .then(response => {
+            loading.style.display = 'none';
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+            sentMessage.style.display = 'block';
+            form.reset(); // Mengosongkan form setelah berhasil
+            console.log('Success:', data);
+          })
+          .catch(error => {
+            errorMessage.style.display = 'block';
+            errorMessage.innerHTML = 'Terjadi kesalahan saat mengirim jawaban.';
+            console.error('Error:', error);
+          });
+        });
+      });
+    </script>
   </body>
 </html>

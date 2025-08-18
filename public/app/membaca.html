@@ -287,7 +287,7 @@
                 </h4>
                 <div class="row gy-4">
                   <div class="col-md-12">
-                    <label for="soal-1" class="pb-2">Siapa nama kamu?</label>
+                    <label for="soal_1" class="pb-2">Siapa nama kamu?</label>
                     <input
                       type="text"
                       name="nama"
@@ -298,7 +298,7 @@
                     />
                   </div>
                   <!-- <div class="col-md-6">
-                    <label for="soal-1" class="pb-2">Kelas</label>
+                    <label for="soal_1" class="pb-2">Kelas</label>
                     <input
                       type="number"
                       name="kelas"
@@ -310,13 +310,13 @@
                     />
                   </div> -->
                     <div class="col-md-6">
-                      <label for="soal-1" class="pb-2"
+                      <label for="soal_1" class="pb-2"
                         >1. Apa arti tiga tingkatan utama candi borobudur yaitu Kamadhatu,
                         Rupadhatu, dan Arupadhatu?</label
                       >
                       <textarea
-                        name="soal-1"
-                        id="soal-1"
+                        name="soal_1"
+                        id="soal_1"
                         class="form-control"
                         required=""
                         rows="2"
@@ -325,11 +325,11 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="soal-2" class="pb-2">2. Siapa yang memerintahkan untuk membangun candi Borobudur?</label>
+                      <label for="soal_2" class="pb-2">2. Siapa yang memerintahkan untuk membangun candi Borobudur?</label>
                       <textarea
                         class="form-control"
-                        name="soal-2"
-                        id="soal-2"
+                        name="soal_2"
+                        id="soal_2"
                         required=""
                         rows="3"
                         style="width: 100%;"
@@ -337,13 +337,13 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="soal-3" class="pb-2"
+                      <label for="soal_3" class="pb-2"
                         >3. Kapan candi Borobudur bangun?</label
                       >
                       <textarea
                         class="form-control"
-                        name="soal-3"
-                        id="soal-3"
+                        name="soal_3"
+                        id="soal_3"
                         required=""
                         rows="3"
                         style="width: 100%;"
@@ -351,13 +351,13 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="soal-4" class="pb-2"
+                      <label for="soal_4" class="pb-2"
                         >4. Di mana letak candi Borobudur?  </label
                       >
                       <textarea
                         class="form-control"
-                        name="soal-4"
-                        id="soal-4"
+                        name="soal_4"
+                        id="soal_4"
                         required=""
                         rows="3"
                         style="width: 100%;"
@@ -365,13 +365,13 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="soal-5" class="pb-2"
+                      <label for="soal_5" class="pb-2"
                         >5. Mengapa candi Borobudur terlihat megah?</label
                       >
                       <textarea
                         class="form-control"
-                        name="soal-5"
-                        id="soal-5"
+                        name="soal_5"
+                        id="soal_5"
                         required=""
                         rows="3"
                         style="width: 100%;"
@@ -379,13 +379,13 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="soal-6" class="pb-2"
+                      <label for="soal_6" class="pb-2"
                         >6. Bagaimana proses penemuan kembali candi Borobudur?</label
                       >
                       <textarea
                         class="form-control"
-                        name="soal-6"
-                        id="soal-6"
+                        name="soal_6"
+                        id="soal_6"
                         required=""
                         rows="3"
                         style="width: 100%;"
@@ -396,7 +396,7 @@
                     <div class="loading">Loading</div>
                     <div class="error-message"></div>
                     <div class="sent-message">
-                      Your message has been sent. Thank you!
+                      Jawaban berhasil dikirim!
                     </div>
 
                     <button type="submit">Kirim Jawaban</button>
@@ -460,5 +460,49 @@
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
     <!-- <script src="renderer.js"></script> -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('.form-asesmen');
+
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Mencegah form refresh halaman
+
+          const formData = new FormData(this);
+          const action = this.getAttribute('action');
+          
+          const loading = this.querySelector('.loading');
+          const errorMessage = this.querySelector('.error-message');
+          const sentMessage = this.querySelector('.sent-message');
+
+          loading.style.display = 'block';
+
+          fetch(action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json',
+            },
+          })
+          .then(response => {
+            loading.style.display = 'none';
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+            sentMessage.style.display = 'block';
+            form.reset(); // Mengosongkan form setelah berhasil
+            console.log('Success:', data);
+          })
+          .catch(error => {
+            errorMessage.style.display = 'block';
+            errorMessage.innerHTML = 'Terjadi kesalahan saat mengirim jawaban.';
+            console.error('Error:', error);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
