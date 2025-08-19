@@ -18,6 +18,11 @@ Route::get('/example', function () {
     return response()->json(['message' => 'This is an example API route']);
 });
 
+Route::get('/membaca', [MainController::class, 'getMembaca']);
+Route::get('/menyimak', [MainController::class, 'getMenyimak']);
+Route::get('/menulis', [MainController::class, 'getMenulis']);
+Route::get('/berbicara', [MainController::class, 'getBerbicara']);
+
 Route::post('/membaca', [MainController::class, 'storeMembaca']);
 Route::post('/menyimak', [MainController::class, 'storeMenyimak']);
 Route::post('/menulis', [MainController::class, 'storeMenulis']);
