@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then(response => {
         loading.style.display = 'none';
+        statusDisplay.textContent = "Status: Data berhasil terkirim!";
         if (response.ok) {
           return response.json();
         }
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         sentMessage.style.display = 'block';
         audioForm.reset(); // Mengosongkan form setelah berhasil
+        statusDisplay.textContent = "Status: Data berhasil terkirim!";
         audioPlayback.src = "";
         console.log('Success:', data);
       })

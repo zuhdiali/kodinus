@@ -162,9 +162,6 @@
                 xhr.open("GET", "http://localhost:8000/api/menyimak", true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        var audioUrl = `http://localhost:8000/${item.file_audio}`;
-                        var mimeType = "audio/webm"; // Default ke format yang paling umum dari browser
-
                         
                         // Handle response here
                         var data = JSON.parse(xhr.responseText);

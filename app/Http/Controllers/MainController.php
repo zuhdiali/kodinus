@@ -89,11 +89,11 @@ class MainController extends Controller
         // Store the file and get the path
         // This will store the file in 'storage/app/public/audio'
         // and return the relative path to the file
-        $request->file('file_audio')->storeAs('audio', $filename, 'public');
+        $request->file('file_audio')->move('audio', $filename);
         // Save the file path in the database as 'storage/audio/filename'
         $berbicara = new Berbicara();
         $berbicara->nama = $request->nama;
-        $berbicara->file_audio = 'storage/audio/' . $filename;
+        $berbicara->file_audio = 'audio/' . $filename;
         $berbicara->save();
         return response()->json($berbicara, 201);
     }
