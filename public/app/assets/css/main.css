@@ -99,6 +99,40 @@
   justify-content: center;
 }
 
+.bg-borobudur {
+ background-image: url("../img/candi borobudur/candi borobudur.png"); /* Ganti dengan path gambar Anda */
+}
+
+.bg-prambanan {
+ background-image: url("../img/candi prambanan/1.png"); /* Ganti dengan path gambar Anda */
+}
+
+.bg-mendut {
+ background-image: url("../img/candi mendut/1.png"); /* Ganti dengan path gambar Anda */
+}
+
+.bg-plaosan {
+ background-image: url("../img/candi plaosan/1.png"); /* Ganti dengan path gambar Anda */
+}
+
+.bg-plain {
+  width: 100%;
+  min-height: 100vh; /* Membuat section setinggi layar */
+  
+  /* --- Awal Kode Tambahan --- */
+ 
+  background-size: cover; /* Membuat gambar menutupi seluruh area */
+  background-position: center; /* Posisi gambar di tengah */
+  background-repeat: no-repeat; /* Mencegah gambar berulang */
+  /* --- Akhir Kode Tambahan --- */
+
+  position: relative;
+  padding: 80px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/

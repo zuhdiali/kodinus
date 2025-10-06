@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-t" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Kodinus</title>
+        <link
+            href="assets/vendor/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+            rel="stylesheet"
+        />
+        <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+        <link
+            href="assets/vendor/swiper/swiper-bundle.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="assets/vendor/glightbox/css/glightbox.min.css"
+            rel="stylesheet"
+        />
+
+        <link href="assets/css/main.css" rel="stylesheet" />
+
+        <style>
+            .sticky-nav-buttons {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1000;
+                display: flex;
+                gap: 10px;
+            }
+
+            .sticky-nav-buttons button {
+                padding: 8px 16px;
+                background-color: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .sticky-nav-buttons button:hover {
+                background-color: #f0f0f0;
+            }
+
+            /* === CSS UNTUK BACKGROUND FADER === */
+            #background-fader {
+                position: fixed; /* Tetap di layar */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1; /* PENTING: Posisikan di lapisan paling belakang */
+
+                /* Properti untuk background image */
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                /* Terapkan transisi opacity ke elemen ini */
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            #background-fader.fade-out {
+                opacity: 0;
+            }
+        </style>
+    </head>
+
+    <body class="bg-borobudur bg-plain">
+        <div id="background-fader"></div>
+
+        <div class="sticky-nav-buttons">
+            <button id="home-button">
+                <i class="bi bi-house-fill"></i> Menu
+            </button>
+            <button id="prev-btn"><i class="bi bi-arrow-left"></i></button>
+            <button id="next-btn"><i class="bi bi-arrow-right"></i></button>
+        </div>
+
+        <main class="main">
+            <div class="min-vh-50"></div>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6"></div>
+                <div class="col-3"></div>
+            </div>
+        </main>
+
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendor/php-email-form/validate.js"></script>
+        <script src="assets/vendor/aos/aos.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const images = [
+                    "assets/img/candi borobudur/1.png",
+                    "assets/img/candi borobudur/2.png",
+                    "assets/img/candi borobudur/3.png",
+                    "assets/img/candi borobudur/4.png",
+                    "assets/img/candi borobudur/5.png",
+                    "assets/img/candi borobudur/6.png",
+                    "assets/img/candi borobudur/7.png",
+                    "assets/img/candi borobudur/8.png",
+                    "assets/img/candi borobudur/9.png",
+                    "assets/img/candi borobudur/10.png",
+                    "assets/img/candi borobudur/11.png",
+                    "assets/img/candi borobudur/12.png",
+                    "assets/img/candi borobudur/13.png",
+                    "assets/img/candi borobudur/14.png",
+                    "assets/img/candi borobudur/15.png",
+                ];
+                let currentIndex = 0;
+
+                // UBAH TARGET: Sekarang kita menargetkan div background
+                const bgElement = document.getElementById("background-fader");
+                const prevButton = document.getElementById("prev-btn");
+                const nextButton = document.getElementById("next-btn");
+                const homeButton = document.getElementById("home-button");
+
+                homeButton.addEventListener("click", function () {
+                    window.location.href = "pembelajaran.html"; // Ganti dengan URL halaman menu utama Anda
+                });
+
+                // Inisialisasi gambar pertama saat halaman dimuat
+                bgElement.style.backgroundImage =
+                    'url("' + images[currentIndex] + '")';
+
+                function changeImage(newIndex) {
+                    bgElement.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        currentIndex = newIndex;
+                        // UBAH PROPERTI: Gunakan style.backgroundImage
+                        bgElement.style.backgroundImage =
+                            'url("' + images[currentIndex] + '")';
+                        bgElement.classList.remove("fade-out");
+                    }, 300);
+                }
+
+                nextButton.addEventListener("click", function () {
+                    let newIndex = currentIndex + 1;
+                    if (newIndex >= images.length) {
+                        newIndex = 0;
+                    }
+                    changeImage(newIndex);
+                });
+
+                prevButton.addEventListener("click", function () {
+                    let newIndex = currentIndex - 1;
+                    if (newIndex < 0) {
+                        newIndex = images.length - 1;
+                    }
+                    changeImage(newIndex);
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Kodinus</title>
+        <link
+            href="assets/vendor/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+            rel="stylesheet"
+        />
+        <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+        <link
+            href="assets/vendor/swiper/swiper-bundle.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="assets/vendor/glightbox/css/glightbox.min.css"
+            rel="stylesheet"
+        />
+
+        <link href="assets/css/main.css" rel="stylesheet" />
+
+        <style>
+            .sticky-nav-buttons {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1000;
+                display: flex;
+                gap: 10px;
+            }
+
+            .sticky-nav-buttons button {
+                padding: 8px 16px;
+                background-color: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .sticky-nav-buttons button:hover {
+                background-color: #f0f0f0;
+            }
+
+            /* === CSS UNTUK SLIDER BACKGROUND === */
+            #background-slider {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden; /* PENTING: Sembunyikan slide yang di luar layar */
+            }
+
+            .bg-slide {
+                position: absolute; /* Posisikan slide relatif terhadap kontainer */
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                /* KUNCI TRANSISI: Animasikan properti 'transform' */
+                transition: transform 0.6s ease-in-out;
+            }
+
+            /* Helper classes untuk mengatur posisi slide */
+            .slide-center {
+                transform: translateX(0);
+            }
+            .slide-left {
+                transform: translateX(-100%);
+            } /* Posisi di luar layar kiri */
+            .slide-right {
+                transform: translateX(100%);
+            } /* Posisi di luar layar kanan */
+        </style>
+    </head>
+
+    <body class="bg-plain">
+        <div id="background-slider">
+            <div class="bg-slide" id="bg-slide-1"></div>
+            <div class="bg-slide" id="bg-slide-2"></div>
+        </div>
+
+        <div class="sticky-nav-buttons">
+            <button id="prev-btn">Previous</button>
+            <button id="next-btn">Next</button>
+        </div>
+
+        <main class="main">
+            <div class="min-vh-50"></div>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6"></div>
+                <div class="col-3"></div>
+            </div>
+        </main>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const images = [
+                    "assets/img/candi borobudur/1.png",
+                    "assets/img/candi borobudur/2.png",
+                    "assets/img/candi borobudur/3.png",
+                    "assets/img/candi borobudur/4.png",
+                    "assets/img/candi borobudur/5.png",
+                    "assets/img/candi borobudur/6.png",
+                    "assets/img/candi borobudur/7.png",
+                    "assets/img/candi borobudur/8.png",
+                    "assets/img/candi borobudur/9.png",
+                    "assets/img/candi borobudur/10.png",
+                    "assets/img/candi borobudur/11.png",
+                    "assets/img/candi borobudur/12.png",
+                    "assets/img/candi borobudur/13.png",
+                    "assets/img/candi borobudur/14.png",
+                    "assets/img/candi borobudur/15.png",
+                ];
+
+                let currentIndex = 0;
+                let isAnimating = false;
+
+                const slide1 = document.getElementById("bg-slide-1");
+                const slide2 = document.getElementById("bg-slide-2");
+
+                let activeSlide = slide1;
+                let nextSlide = slide2;
+
+                // Inisialisasi gambar dan posisi pertama
+                activeSlide.style.backgroundImage = `url("${images[currentIndex]}")`;
+                activeSlide.classList.add("slide-center");
+                nextSlide.classList.add("slide-right");
+
+                function changeImage(direction) {
+                    if (isAnimating) return; // Mencegah klik ganda saat animasi berjalan
+                    isAnimating = true;
+
+                    // Tentukan index gambar berikutnya
+                    if (direction === "next") {
+                        currentIndex = (currentIndex + 1) % images.length;
+                        // Posisikan slide berikutnya di kanan
+                        nextSlide.style.backgroundImage = `url("${images[currentIndex]}")`;
+                        nextSlide.classList.replace(
+                            "slide-left",
+                            "slide-right"
+                        ); // Pastikan posisi awal benar
+
+                        // Animasikan
+                        activeSlide.classList.replace(
+                            "slide-center",
+                            "slide-left"
+                        );
+                        nextSlide.classList.replace(
+                            "slide-right",
+                            "slide-center"
+                        );
+                    } else {
+                        // direction === 'prev'
+                        currentIndex =
+                            (currentIndex - 1 + images.length) % images.length;
+                        // Posisikan slide berikutnya di kiri
+                        nextSlide.style.backgroundImage = `url("${images[currentIndex]}")`;
+                        nextSlide.classList.replace(
+                            "slide-right",
+                            "slide-left"
+                        ); // Pastikan posisi awal benar
+
+                        // Animasikan
+                        activeSlide.classList.replace(
+                            "slide-center",
+                            "slide-right"
+                        );
+                        nextSlide.classList.replace(
+                            "slide-left",
+                            "slide-center"
+                        );
+                    }
+
+                    // Setelah animasi selesai, reset posisi dan tukar peran slide
+                    setTimeout(() => {
+                        // Tukar peran
+                        let temp = activeSlide;
+                        activeSlide = nextSlide;
+                        nextSlide = temp;
+
+                        // Posisikan slide yang sudah tidak aktif (nextSlide baru) di luar layar
+                        // tanpa animasi, siap untuk slide berikutnya.
+                        if (direction === "next") {
+                            nextSlide.classList.replace(
+                                "slide-left",
+                                "slide-right"
+                            );
+                        } else {
+                            nextSlide.classList.replace(
+                                "slide-right",
+                                "slide-left"
+                            );
+                        }
+
+                        isAnimating = false;
+                    }, 600); // Durasi harus sama dengan transition di CSS
+                }
+
+                document
+                    .getElementById("next-btn")
+                    .addEventListener("click", () => changeImage("next"));
+                document
+                    .getElementById("prev-btn")
+                    .addEventListener("click", () => changeImage("prev"));
+            });
+        </script>
+    </body>
+</html>
