@@ -80,9 +80,12 @@
             </button>
             <button id="prev-btn"><i class="bi bi-arrow-left"></i></button>
             <button id="next-btn"><i class="bi bi-arrow-right"></i></button>
+<<<<<<< HEAD
             <button id="play-pause-btn" title="Pause slideshow">
                 <i class="bi bi-pause-fill"></i>
             </button>
+=======
+>>>>>>> 492077f (revisi 2)
         </div>
 
         <main class="main">
@@ -125,6 +128,7 @@
                 const prevButton = document.getElementById("prev-btn");
                 const nextButton = document.getElementById("next-btn");
                 const homeButton = document.getElementById("home-button");
+<<<<<<< HEAD
                 const playPauseButton =
                     document.getElementById("play-pause-btn");
                 const playPauseIcon = playPauseButton.querySelector("i");
@@ -133,6 +137,14 @@
                     window.location.href = "pembelajaran.html";
                 });
 
+=======
+
+                homeButton.addEventListener("click", function () {
+                    window.location.href = "pembelajaran.html"; // Ganti dengan URL halaman menu utama Anda
+                });
+
+                // Inisialisasi gambar pertama saat halaman dimuat
+>>>>>>> 492077f (revisi 2)
                 bgElement.style.backgroundImage =
                     'url("' + images[currentIndex] + '")';
 
@@ -141,6 +153,10 @@
 
                     setTimeout(() => {
                         currentIndex = newIndex;
+<<<<<<< HEAD
+=======
+                        // UBAH PROPERTI: Gunakan style.backgroundImage
+>>>>>>> 492077f (revisi 2)
                         bgElement.style.backgroundImage =
                             'url("' + images[currentIndex] + '")';
                         bgElement.classList.remove("fade-out");
@@ -153,7 +169,10 @@
                         newIndex = 0;
                     }
                     changeImage(newIndex);
+<<<<<<< HEAD
                     resetAutoSlide();
+=======
+>>>>>>> 492077f (revisi 2)
                 });
 
                 prevButton.addEventListener("click", function () {
@@ -162,6 +181,7 @@
                         newIndex = images.length - 1;
                     }
                     changeImage(newIndex);
+<<<<<<< HEAD
                     resetAutoSlide();
                 });
 
@@ -198,6 +218,8 @@
                         playPauseIcon.classList.add("bi-pause-fill");
                         playPauseButton.title = "Pause slideshow";
                     }
+=======
+>>>>>>> 492077f (revisi 2)
                 });
             });
         </script>
