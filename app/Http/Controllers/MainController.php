@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Membaca;
 use App\Models\Menyimak;
@@ -47,7 +48,9 @@ class MainController extends Controller
             'soal_3' => 'required|string',
             'soal_4' => 'required|string',
             'soal_5' => 'required|string',
-            'soal_6' => 'required|string'
+            'soal_6' => 'required|string',
+            'soal_7' => 'required|string',
+            'soal_8' => 'required|string',
         ]);
         $membaca = Membaca::create($request->all());
         return response()->json($membaca, 201);
@@ -156,7 +159,7 @@ class MainController extends Controller
         $query = $request->input('query');
         $results = Menyimak::where('nama', 'LIKE', "%{$query}%")->get();
         return response()->json($results);
-    }   
+    }
     public function searchMenulis(Request $request)
     {
         $query = $request->input('query');

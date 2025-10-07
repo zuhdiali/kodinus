@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +18,9 @@ class Membaca extends Model
         'soal_3',
         'soal_4',
         'soal_5',
-        'soal_6'
+        'soal_6',
+        'soal_7',
+        'soal_8',
     ];
 
     public $timestamps = true;

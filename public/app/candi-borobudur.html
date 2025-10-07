@@ -80,6 +80,9 @@
             </button>
             <button id="prev-btn"><i class="bi bi-arrow-left"></i></button>
             <button id="next-btn"><i class="bi bi-arrow-right"></i></button>
+            <button id="play-pause-btn" title="Pause slideshow">
+                <i class="bi bi-pause-fill"></i>
+            </button>
         </div>
 
         <main class="main">
@@ -117,17 +120,18 @@
                 ];
                 let currentIndex = 0;
 
-                // UBAH TARGET: Sekarang kita menargetkan div background
                 const bgElement = document.getElementById("background-fader");
                 const prevButton = document.getElementById("prev-btn");
                 const nextButton = document.getElementById("next-btn");
                 const homeButton = document.getElementById("home-button");
+                const playPauseButton =
+                    document.getElementById("play-pause-btn");
+                const playPauseIcon = playPauseButton.querySelector("i");
 
                 homeButton.addEventListener("click", function () {
-                    window.location.href = "pembelajaran.html"; // Ganti dengan URL halaman menu utama Anda
+                    window.location.href = "pembelajaran.html";
                 });
 
-                // Inisialisasi gambar pertama saat halaman dimuat
                 bgElement.style.backgroundImage =
                     'url("' + images[currentIndex] + '")';
 
@@ -136,7 +140,6 @@
 
                     setTimeout(() => {
                         currentIndex = newIndex;
-                        // UBAH PROPERTI: Gunakan style.backgroundImage
                         bgElement.style.backgroundImage =
                             'url("' + images[currentIndex] + '")';
                         bgElement.classList.remove("fade-out");
@@ -149,6 +152,7 @@
                         newIndex = 0;
                     }
                     changeImage(newIndex);
+                    resetAutoSlide();
                 });
 
                 prevButton.addEventListener("click", function () {
@@ -157,6 +161,42 @@
                         newIndex = images.length - 1;
                     }
                     changeImage(newIndex);
+                    resetAutoSlide();
+                });
+
+                // Play/Pause functionality
+                let isPlaying = true;
+                let autoSlideInterval = setInterval(nextSlide, 5000);
+
+                function nextSlide() {
+                    let newIndex = currentIndex + 1;
+                    if (newIndex >= images.length) {
+                        newIndex = 0;
+                    }
+                    changeImage(newIndex);
+                }
+
+                function resetAutoSlide() {
+                    if (isPlaying) {
+                        clearInterval(autoSlideInterval);
+                        autoSlideInterval = setInterval(nextSlide, 5000);
+                    }
+                }
+
+                playPauseButton.addEventListener("click", function () {
+                    if (isPlaying) {
+                        clearInterval(autoSlideInterval);
+                        isPlaying = false;
+                        playPauseIcon.classList.remove("bi-pause-fill");
+                        playPauseIcon.classList.add("bi-play-fill");
+                        playPauseButton.title = "Play slideshow";
+                    } else {
+                        autoSlideInterval = setInterval(nextSlide, 5000);
+                        isPlaying = true;
+                        playPauseIcon.classList.remove("bi-play-fill");
+                        playPauseIcon.classList.add("bi-pause-fill");
+                        playPauseButton.title = "Pause slideshow";
+                    }
                 });
             });
         </script>
