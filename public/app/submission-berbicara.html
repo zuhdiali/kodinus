@@ -51,9 +51,7 @@
     </head>
 
     <body class="contact-page bg-pembelajaran">
-        
         <main class="main">
-            
             <!-- Services Section -->
             <section id="contact" class="contact section">
                 <div class="container">
@@ -65,8 +63,8 @@
                 <div class="container section-title" data-aos="fade-up">
                     <h2>Berbicara</h2>
                     <p>
-                        Berikut ini adalah riwayat submission berbicara yang telah
-                        terkirim ke server
+                        Berikut ini adalah riwayat submission berbicara yang
+                        telah terkirim ke server
                     </p>
                 </div>
                 <!-- End Section Title -->
@@ -154,7 +152,11 @@
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "http://localhost:8000/api/berbicara", true);
+                xhr.open(
+                    "GET",
+                    "https://inovasi1101.com/kodinus/api/berbicara",
+                    true
+                );
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         // Handle response here
@@ -164,8 +166,8 @@
                         tbody.innerHTML = ""; // Clear existing rows
                         var i = 1;
                         data.forEach(function (item) {
-                            var audioUrl = `http://localhost:8000/${item.file_audio}`;
-                            var mimeType = 'audio/webm'; // Default ke format yang paling umum dari browser
+                            var audioUrl = `https://inovasi1101.com/kodinus/${item.file_audio}`;
+                            var mimeType = "audio/webm"; // Default ke format yang paling umum dari browser
 
                             if (item.file_audio.endsWith(".wav")) {
                                 mimeType = "audio/wav";

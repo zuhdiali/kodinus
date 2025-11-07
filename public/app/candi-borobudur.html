@@ -80,12 +80,9 @@
             </button>
             <button id="prev-btn"><i class="bi bi-arrow-left"></i></button>
             <button id="next-btn"><i class="bi bi-arrow-right"></i></button>
-<<<<<<< HEAD
-            <button id="play-pause-btn" title="Pause slideshow">
+            <button id="play-pause-btn" title="Jeda slideshow">
                 <i class="bi bi-pause-fill"></i>
             </button>
-=======
->>>>>>> 492077f (revisi 2)
         </div>
 
         <main class="main">
@@ -120,34 +117,52 @@
                     "assets/img/candi borobudur/13.png",
                     "assets/img/candi borobudur/14.png",
                     "assets/img/candi borobudur/15.png",
+                    "assets/img/candi borobudur/16.png",
                 ];
                 let currentIndex = 0;
 
-<<<<<<< HEAD
-=======
-                // UBAH TARGET: Sekarang kita menargetkan div background
->>>>>>> 492077f (revisi 2)
                 const bgElement = document.getElementById("background-fader");
                 const prevButton = document.getElementById("prev-btn");
                 const nextButton = document.getElementById("next-btn");
                 const homeButton = document.getElementById("home-button");
-<<<<<<< HEAD
                 const playPauseButton =
                     document.getElementById("play-pause-btn");
                 const playPauseIcon = playPauseButton.querySelector("i");
+                const stickyButtons = document.querySelector(
+                    ".sticky-nav-buttons"
+                );
+
+                // Create restart prompt elements (hidden by default)
+                const restartPrompt = document.createElement("div");
+                restartPrompt.style.display = "none";
+                restartPrompt.style.alignItems = "center";
+                restartPrompt.style.gap = "8px";
+                restartPrompt.style.padding = "6px";
+                restartPrompt.style.background = "rgba(255,255,255,0.95)";
+                restartPrompt.style.border = "1px solid #ddd";
+                restartPrompt.style.borderRadius = "6px";
+                restartPrompt.style.boxShadow = "0 2px 6px rgba(0,0,0,0.08)";
+
+                const restartText = document.createElement("span");
+                restartText.textContent = "Komik telah selesai.";
+
+                const restartBtn = document.createElement("button");
+                restartBtn.textContent = "Ulangi";
+                restartBtn.style.cursor = "pointer";
+
+                const keepBtn = document.createElement("button");
+                keepBtn.textContent = "Biarkan";
+                keepBtn.style.cursor = "pointer";
+
+                restartPrompt.appendChild(restartText);
+                restartPrompt.appendChild(restartBtn);
+                restartPrompt.appendChild(keepBtn);
+                stickyButtons.appendChild(restartPrompt);
 
                 homeButton.addEventListener("click", function () {
                     window.location.href = "pembelajaran.html";
                 });
 
-=======
-
-                homeButton.addEventListener("click", function () {
-                    window.location.href = "pembelajaran.html"; // Ganti dengan URL halaman menu utama Anda
-                });
-
-                // Inisialisasi gambar pertama saat halaman dimuat
->>>>>>> 492077f (revisi 2)
                 bgElement.style.backgroundImage =
                     'url("' + images[currentIndex] + '")';
 
@@ -156,35 +171,70 @@
 
                     setTimeout(() => {
                         currentIndex = newIndex;
-<<<<<<< HEAD
-=======
-                        // UBAH PROPERTI: Gunakan style.backgroundImage
->>>>>>> 492077f (revisi 2)
                         bgElement.style.backgroundImage =
                             'url("' + images[currentIndex] + '")';
                         bgElement.classList.remove("fade-out");
+                        // hide restart prompt if moved away from end
+                        if (currentIndex < images.length - 1) {
+                            hideRestartPrompt();
+                        }
                     }, 300);
                 }
+
+                function showRestartPrompt() {
+                    // stop auto slide and update play/pause
+                    if (autoSlideInterval) {
+                        clearInterval(autoSlideInterval);
+                        autoSlideInterval = null;
+                    }
+                    isPlaying = false;
+                    playPauseIcon.classList.remove("bi-pause-fill");
+                    playPauseIcon.classList.add("bi-play-fill");
+                    playPauseButton.title = "Jalankan slideshow";
+
+                    // disable next button to avoid repeated triggers
+                    nextButton.disabled = true;
+                    restartPrompt.style.display = "flex";
+                }
+
+                function hideRestartPrompt() {
+                    restartPrompt.style.display = "none";
+                    nextButton.disabled = false;
+                }
+
+                restartBtn.addEventListener("click", function () {
+                    hideRestartPrompt();
+                    changeImage(0);
+                    // optionally restart autoplay
+                    autoSlideInterval = setInterval(nextSlide, 5000);
+                    isPlaying = true;
+                    playPauseIcon.classList.remove("bi-play-fill");
+                    playPauseIcon.classList.add("bi-pause-fill");
+                    playPauseButton.title = "Jeda slideshow";
+                });
+
+                keepBtn.addEventListener("click", function () {
+                    hideRestartPrompt();
+                    // stay on last image, keep autoplay stopped
+                });
 
                 nextButton.addEventListener("click", function () {
                     let newIndex = currentIndex + 1;
                     if (newIndex >= images.length) {
-                        newIndex = 0;
+                        // reached end -> show restart option instead of wrapping
+                        showRestartPrompt();
+                    } else {
+                        changeImage(newIndex);
                     }
-                    changeImage(newIndex);
-<<<<<<< HEAD
                     resetAutoSlide();
-=======
->>>>>>> 492077f (revisi 2)
                 });
 
                 prevButton.addEventListener("click", function () {
                     let newIndex = currentIndex - 1;
                     if (newIndex < 0) {
-                        newIndex = images.length - 1;
+                        newIndex = 0;
                     }
                     changeImage(newIndex);
-<<<<<<< HEAD
                     resetAutoSlide();
                 });
 
@@ -195,7 +245,9 @@
                 function nextSlide() {
                     let newIndex = currentIndex + 1;
                     if (newIndex >= images.length) {
-                        newIndex = 0;
+                        // stop and show restart when auto reaches end
+                        showRestartPrompt();
+                        return;
                     }
                     changeImage(newIndex);
                 }
@@ -210,19 +262,23 @@
                 playPauseButton.addEventListener("click", function () {
                     if (isPlaying) {
                         clearInterval(autoSlideInterval);
+                        autoSlideInterval = null;
                         isPlaying = false;
                         playPauseIcon.classList.remove("bi-pause-fill");
                         playPauseIcon.classList.add("bi-play-fill");
-                        playPauseButton.title = "Play slideshow";
+                        playPauseButton.title = "Jalankan slideshow";
                     } else {
+                        // if currently at end, show restart prompt instead of resuming
+                        if (currentIndex >= images.length - 1) {
+                            showRestartPrompt();
+                            return;
+                        }
                         autoSlideInterval = setInterval(nextSlide, 5000);
                         isPlaying = true;
                         playPauseIcon.classList.remove("bi-play-fill");
                         playPauseIcon.classList.add("bi-pause-fill");
-                        playPauseButton.title = "Pause slideshow";
+                        playPauseButton.title = "Jeda slideshow";
                     }
-=======
->>>>>>> 492077f (revisi 2)
                 });
             });
         </script>
